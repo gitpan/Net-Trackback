@@ -1,13 +1,12 @@
-CHANGE LOG
-Net::TrackBack 
+Revision history for Perl extension Net::TrackBack.
 (formerly XML::TrackBack)
 
-0.21 2003.03.17
+0.21  Mar 19 2003
 	- Moved module in heirarchy from XML::TrackBack to more appropriate Net::TrackBack.
 	- Initial release into CPAN.
 
-0.2  2003.01.16
-    - Added discover subroutine.
+0.2  Jan 16 2003
+	- Added discover subroutine.
 
-0.1  2003.01.11
-    - Initial distribution.
+0.1  Jan 01 2003
+	- Original version.
