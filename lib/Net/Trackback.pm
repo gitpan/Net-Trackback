@@ -1,17 +1,15 @@
-# Copyright (c) 2003-4 Timothy Appnel
+# Copyright (c) 2003-2004 Timothy Appnel (cpan@timaoutloud.org)
 # http://www.timaoutloud.org/
 # This code is released under the Artistic License.
-#
-# Net::Trackback - an object-oriented interface for developing 
-# Trackback clients and servers 
-# 
-
 package Net::Trackback;
-
 use strict;
+use base qw( Class::ErrorHandler Exporter );
+
+use vars qw( @EXPORT_OK );
+@EXPORT_OK = qw( encode_xml decode_xml );
 
 use vars qw($VERSION);
-$VERSION = 0.992;
+$VERSION = 1.0;
 
 my %Map = ('&' => '&amp;', '"' => '&quot;', '<' => '&lt;', '>' => '&gt;',
            '\'' => '&apos;');
@@ -32,6 +30,8 @@ sub decode_xml {
     $str;
 }
 
+
+#--- deprecated
 sub is_message { ref($_[1]) eq 'Net::Trackback::Message' }
 sub is_ping { ref($_[1]) eq 'Net::Trackback::Ping' }
 sub is_data { ref($_[1]) eq 'Net::Trackback::Data' }
@@ -64,16 +64,18 @@ backwards compatable in the least.
 
 =head1 METHODS
 
-This module contains a number of utility methods for wrking with the
-other modules in this package.
+This module contains two exportable utility methods for working with
+XML.
 
-=item Net::Trackback->encode_xml($string)
+=item encode_xml($string)
 
 A simple utility for encoding XML's five named entities from text.
 
-=item Net::Trackback->decode_xml($string)
+=item decode_xml($string)
 
 A simple utility for encoding XML's five named entities into text.
+
+=head2 Deprecated
 
 =item Net::Trackback->is_data($object)
 
@@ -114,23 +116,19 @@ L<http://movabletype.org/docs/mtmanual_trackback.html>
 =item Add functionality to using RSS/Atom to discover pingable 
 resources.
 
-=item Add proxy support to the client.
-
-=item Make utility methods in Net::Trackback module exportable?
-
 =item Implement an optional XML parser option?
-
-=item Implement better encoding?
 
 =head1 LICENSE
 
-The software is released under the Artistic License. The terms of the Artistic License are described 
-at L<http://www.perl.com/language/misc/Artistic.html>.
+The software is released under the Artistic License. The terms of
+the Artistic License are described at
+L<http://www.perl.com/language/misc/Artistic.html>.
 
 =head1 AUTHOR & COPYRIGHT
 
-Except where otherwise noted, Net::Trackback is Copyright 2003-4, Timothy Appnel, 
-cpan@timaoutloud.org. All rights reserved.
+Except where otherwise noted, Net::Trackback is Copyright
+2003-2004, Timothy Appnel, cpan@timaoutloud.org. All rights
+reserved.
 
 =cut
 

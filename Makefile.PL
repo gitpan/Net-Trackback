@@ -3,6 +3,6 @@ use ExtUtils::MakeMaker;
 # the contents of the Makefile that is written.
 WriteMakefile(
     'NAME'		=> 'Net::Trackback',
-    'VERSION_FROM'	=> 'lib/Net/Trackback.pm', # finds $VERSION
-    'PREREQ_PM'		=> { LWP }, # e.g., Module::Name => 1.1
+    'VERSION_FROM'	=> 'lib/Net/Trackback.pm',
+    'PREREQ_PM'		=> { LWP, Class::ErrorHandler }
 );

@@ -1,14 +1,11 @@
-# Copyright (c) 2003-4 Timothy Appnel
+# Copyright (c) 2003-2004 Timothy Appnel (cpan@timaoutloud.org)
 # http://www.timaoutloud.org/
 # This code is released under the Artistic License.
-#
-# Net::Trackback::Data - an object representing Trackback data to a
-# pingable resource.
-# 
-
 package Net::Trackback::Data;
-
 use strict;
+use base qw( Class::ErrorHandler );
+
+use Net::Trackback qw( encode_xml decode_xml );
 
 my %fields;
 map { $fields{$_}=1 } 
@@ -34,11 +31,11 @@ sub parse {
     my $class = shift;
     my $url = shift;
     my $rdf = shift;
-    my $target = $class->new();
     # Eventually insert XML::Parser option here.
     my ($perm_url) = $rdf =~ m!dc:identifier="([^"]+)"!;
+    return unless $perm_url;
     (my $url_no_anchor = $url) =~ s/#.*$//;
-    next unless $perm_url eq $url || $perm_url eq $url_no_anchor;
+    return unless $perm_url eq $url || $perm_url eq $url_no_anchor;
     my $self = $class->new();
     # Theoretically this is bad namespace form and eventually 
     # should be fixed. If you stick to the standard prefixes 
@@ -47,7 +44,7 @@ sub parse {
             $rdf =~ m!about="([^"]+)"! ) {
         $self->{__stash}->{ping}=$1;
         while ( $rdf=~m!dc:(\w+)="([^"]+)"!g ) {
-            $self->$1( Net::Trackback->decode_xml($2) );
+            $self->$1( decode_xml($2) );
         }
     }
     $self;
@@ -64,7 +61,7 @@ sub to_rdf {
     $a .= $indent.'trackback:ping="'.$stash->{ping}.$aterm if $stash->{ping}; 
     foreach (keys %fields) {
         if ($stash->{$_}) {
-            my $val = Net::Trackback->encode_xml($stash->{$_});
+            my $val = encode_xml($stash->{$_});
             $a .= "${indent}dc:$_=\"$val$aterm";
         }
     }
@@ -85,7 +82,7 @@ use vars qw( $AUTOLOAD );
 sub AUTOLOAD {
     (my $var = $AUTOLOAD) =~ s!.+::!!;
     no strict 'refs';
-    die "$var is not a recognized method."
+    warn("$var is not a recognized method."), return
         unless ( $fields{$var} );
     *$AUTOLOAD = sub {
         $_[0]->{__stash}->{$var} = $_[1] if $_[1];
@@ -131,11 +128,11 @@ course.) These keys correspond to the methods like named methods.
 =item Net::Trackback::Data->parse($rdf)
 
 A method that parses (albeit crude using regex) Trackback data from
-a string of RDF and returns a data object. In the event a bad or 
-incomplete data has been passed in the method will return the 
-appropriate Trackback error message as a L<Net::Trackback::Message>
-object. One required parameter, a string containing RDF. See the list 
-of recognized keys in the L<new> method.
+a string of RDF and returns a data object. In the event a bad or
+incomplete data has been passed in the method will return C<undef>.
+The error message can be retreived with the C<errstr> method. One
+required parameter, a string containing RDF. See the list of
+recognized keys in the L<new> method.
 
 B<NOTE:> This module does not use a XML or RDF parser therefore
 namespaces are not handled properly. The prefixes are assumed to be
@@ -197,6 +194,25 @@ Returns a hash of the object's current state.
 Returns an RDF representation of the object metadata that can 
 be inserted into an (X)HTML page for discovery by Trackback 
 clients.
+
+=head2 Errors
+
+This module is a subclass of L<Class::ErrorHandler> and inherits
+two methods for passing error message back to a caller.
+
+=item Class->error($message) 
+
+=item $object->error($message)
+
+Sets the error message for either the class Class or the object
+$object to the message $message. Returns undef.
+
+=item Class->errstr 
+
+=item $object->errstr
+
+Accesses the last error message set in the class Class or the
+object $object, respectively, and returns that error message.
 
 =head1 SEE ALSO
 

@@ -1,13 +1,11 @@
-# Copyright (c) 2003-4 Timothy Appnel
+# Copyright (c) 2003-2004 Timothy Appnel (cpan@timaoutloud.org)
 # http://www.timaoutloud.org/
 # This code is released under the Artistic License.
-#
-# Net::Trackback::Message - an object representing a Trackback message. 
-# 
-
 package Net::Trackback::Message;
-
 use strict;
+use base qw( Class::ErrorHandler );
+
+use Net::Trackback qw( encode_xml );
 
 sub new { 
     my $self = bless {}, $_[0];
@@ -17,13 +15,13 @@ sub new {
 }
 
 sub parse {
-    my $class = shift;
-    my $xml = shift;
+    my($class,$xml) = @_;
     # should use xml parser but...
-    my $a;
-    ($a->{code}) = $xml =~ m!<error>(\d+)</error>!s;
-    ($a->{message}) = $xml =~ m!<message>(.+?)</message>!s;
-    exists $a->{code} ? $class->new( $a ) : undef;
+    my($code) = $xml =~ m!<error>(\d+)</error>!s;
+    my($message) = $xml =~ m!<message>(.+?)</message>!s;
+    defined $code ? 
+        $class->new({code=>$code,message=>$message}) : 
+            $class->error('Invalid message.');
 }
 
 sub to_hash { %{ $_[0]->{__stash} } }
@@ -31,7 +29,7 @@ sub to_hash { %{ $_[0]->{__stash} } }
 sub to_xml {
     my $self = shift;
     my $code = $self->{__stash}->{code} || 0;
-    my $msg = Net::Trackback->encode_xml($self->{__stash}->{msg}) || '';
+    my $msg = encode_xml($self->{__stash}->{msg}) || '';
     my $xml = <<MESSAGE;
 <?xml version="1.0" encoding="iso-8859-1"?>
 <response>
@@ -70,7 +68,17 @@ Net::Trackback::Message - an object representing a Trackback message.
 
 =item Net::Trackback::Message->new([$hashref])
 
+Constuctor method. It will initialize the object if passed a 
+hash reference. Recognized keys are code and message. These keys 
+correspond to the methods like named methods.
+
 =item Net::Trackback::Message->parse($xml)
+
+A method that parses (albeit crude using regex) a Trackback message
+and returns a message object. In the event a bad or
+incomplete message has been passed in the method will return C<undef>.
+The error message can be retreived with the C<errstr> method. One
+required parameter, a string containing the message XML. 
 
 =item $msg->code([$int])
 
@@ -110,6 +118,25 @@ Returns a hash of the object's current state.
 
 Returns an XML representation of the Trackback message that can 
 be sent as a response to a client.
+
+=head2 Errors
+
+This module is a subclass of L<Class::ErrorHandler> and inherits
+two methods for passing error message back to a caller.
+
+=item Class->error($message) 
+
+=item $object->error($message)
+
+Sets the error message for either the class Class or the object
+$object to the message $message. Returns undef.
+
+=item Class->errstr 
+
+=item $object->errstr
+
+Accesses the last error message set in the class Class or the
+object $object, respectively, and returns that error message.
 
 =head1 AUTHOR & COPYRIGHT
 

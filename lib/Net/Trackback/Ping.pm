@@ -1,17 +1,13 @@
-# Copyright (c) 2003-4 Timothy Appnel
+# Copyright (c) 2003-2004 Timothy Appnel (cpan@timaoutloud.org)
 # http://www.timaoutloud.org/
 # This code is released under the Artistic License.
-#
-# Net::Trackback::Ping - an object representing a Trackback ping.
-# 
-
-package Net::Trackback::Ping;
-
+package Net::Trackback::Client;
 use strict;
+use base qw( Class::ErrorHandler );
 
 my %fields;
-map { $fields{$_}=1 } qw( title excerpt url blog_name timestamp 
-                            ping_url id);
+map { $fields{$_}=1 } 
+    qw( title excerpt url blog_name timestamp ping_url id);
 
 sub new { 
     my $self = bless {}, $_[0];
@@ -29,13 +25,9 @@ sub parse {
             ( $tb_id = $pi ) =~ s!^/!!;
         }
     }
-    return Net::Trackback::Message->new(
-        { code=>1, message=>'No Trackback ID (tb_id)' } ) 
-            unless $tb_id;
+    return $class->error('No Trackback ID (tb_id)') unless $tb_id;
     $tb_id =~ tr/a-zA-Z0-9/_/cs;
-    return Net::Trackback::Message->new(
-        { code=>1, message=>'No URL (url)' } ) 
-            unless $q->param('url');
+    return $class->error('No URL (url)') unless $q->param('url');
     my $self = $class->new();
     $self->{__stash} =
         { map { $_ => scalar $q->param($_) } 
@@ -110,13 +102,12 @@ like named methods.
 
 =item Net::Trackback::Ping->parse($CGI)
 
-A method that extracts ping data from an HTTP request and returns 
-a ping object. In the event a bad ping has been passed in the 
-method will return the appropriate Trackback error message as a 
-L<Net::Trackback::Message> object. One required parameter, a 
-reference to a L<CGI> object or some other that has a C<param> 
-method that works just like it. See the list of recognized 
-keys in the L<new> method.
+A method that extracts ping data from an HTTP request and returns a
+ping object. In the event a bad ping has been passed in the method
+will return C<undef>. USe the C<errstr> method to retrieve the
+error message. One required parameter, a reference to a L<CGI>
+object or some other that has a C<param> method that works just
+like it. See the list of recognized keys in the L<new> method.
 
 =item $ping->url([$url])
 
@@ -146,7 +137,7 @@ the L<url>. Passing in an optional string parameter sets the value.
 
 B<NOTE:> While the Trackback specification doesn't specify a limit
 to the size of an excerpt, some implementations do. For instance as
-of Movable Type 2.61, Trackback excerpts cannot exceed 255 
+of Movable Type 3.14, Trackback excerpts cannot exceed 255 
 characters.
 
 =item $ping->blog_name([$source]);
@@ -161,6 +152,25 @@ Returns a hash of the object's current state.
 =item $ping->to_urlencoded
 
 Returns a URL encoded string of the object's current state.
+
+=head2 Errors
+
+This module is a subclass of L<Class::ErrorHandler> and inherits
+two methods for passing error message back to a caller.
+
+=item Class->error($message) 
+
+=item $object->error($message)
+
+Sets the error message for either the class Class or the object
+$object to the message $message. Returns undef.
+
+=item Class->errstr 
+
+=item $object->errstr
+
+Accesses the last error message set in the class Class or the
+object $object, respectively, and returns that error message.
 
 =head1 AUTHOR & COPYRIGHT
 
