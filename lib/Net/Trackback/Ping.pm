@@ -10,7 +10,7 @@ package Net::Trackback::Ping;
 use strict;
 
 my %fields;
-map { $fields{$_}=1 } qw( title excerpt url blogname timestamp 
+map { $fields{$_}=1 } qw( title excerpt url blog_name timestamp 
                             ping_url id);
 
 sub new { 
@@ -149,7 +149,7 @@ to the size of an excerpt, some implementations do. For instance as
 of Movable Type 2.61, Trackback excerpts cannot exceed 255 
 characters.
 
-=item $ping->blogname([$source]);
+=item $ping->blog_name([$source]);
 
 Accessor to the source of the ping. Passing in an optional string
 parameter sets the value.

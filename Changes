@@ -1,19 +1,27 @@
 Revision history for Perl extension Net::Trackback.
-(formerly XML::TrackBack)
+(formerly XML::TrackBack and Net::TrackBack)
 
-0.991  Mar 20 2004
-    - Snagged by the lowercase B. Fixed the test script that was failing because of the difference in case.
+0.992 Apr 22 2004
+       - Fixed 'blog_name' field and method incorrectly named
+         'blogname' in Ping. (Yann Kerhervé)
+
+0.991 Mar 20 2004
+       - Snagged by the lowercase B. Fixed the test script that was
+         failing because of the difference in case.
 
 0.99  Mar 20 2004
-    - Complete refactoring of the interface and code. Too many changes to list.
-    - Change module name to reflect the official capitalization -- lowercase B.
+       - Complete refactoring of the interface and code. Too many
+         changes to list. 
+       - Change module name to reflect the official capitalization
+         -- lowercase B.
 
 0.21  Mar 19 2003
-	- Moved module in heirarchy from XML::TrackBack to more appropriate Net::TrackBack.
-	- Initial release into CPAN.
+	   - Initial release into CPAN.
+	   - Moved module in heirarchy from XML::TrackBack to more
+	     appropriate Net::TrackBack.
 
 0.2  Jan 16 2003
-	- Added discover subroutine.
+	   - Added discover subroutine.
 
 0.1  Jan 01 2003
-	- Original version.
+	   - Original version.
