@@ -1,9 +1,8 @@
 use ExtUtils::MakeMaker;
+# See lib/ExtUtils/MakeMaker.pm for details of how to influence
+# the contents of the Makefile that is written.
 WriteMakefile(
-    'NAME'		=> 'Net::TrackBack',
-    'VERSION_FROM'	=> 'TrackBack.pm',
-    'PREREQ_PM'		=> {LWP},
-    ($] >= 5.005 ?
-      (ABSTRACT_FROM => 'TrackBack.pm', 
-       AUTHOR     => 'Timothy Appnel <tima@mplode.com>') : ()),
+    'NAME'		=> 'Net::Trackback',
+    'VERSION_FROM'	=> 'lib/Net/Trackback.pm', # finds $VERSION
+    'PREREQ_PM'		=> { LWP }, # e.g., Module::Name => 1.1
 );

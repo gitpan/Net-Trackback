@@ -1,6 +1,9 @@
 Revision history for Perl extension Net::TrackBack.
 (formerly XML::TrackBack)
 
+0.99  Mar 20 2004
+    - Complete refactoring of the interface and code. Too many changes to list.
+
 0.21  Mar 19 2003
 	- Moved module in heirarchy from XML::TrackBack to more appropriate Net::TrackBack.
 	- Initial release into CPAN.
