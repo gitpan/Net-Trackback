@@ -1,4 +1,4 @@
-Net::TrackBack is an object-oriented interface for developing 
+Net::Trackback is an object-oriented interface for developing 
 Trackback clients and servers.
 
 INSTALLATION
@@ -19,6 +19,6 @@ COPYRIGHT AND LICENCE
 
 The software is released under the Artistic License. The terms of the 
 Artistic License are described at http://www.perl.com/language/misc/Artistic.html. 
-Except where otherwise noted, Net::TrackBack is Copyright 2003-4, 
+Except where otherwise noted, Net::Trackback is Copyright 2003-4, 
 Timothy Appnel, cpan@timaoutloud.org. All rights reserved.
 

@@ -11,7 +11,7 @@ package Net::Trackback;
 use strict;
 
 use vars qw($VERSION);
-$VERSION = 0.99;
+$VERSION = 0.991;
 
 my %Map = ('&' => '&amp;', '"' => '&quot;', '<' => '&lt;', '>' => '&gt;',
            '\'' => '&apos;');

@@ -1,8 +1,12 @@
-Revision history for Perl extension Net::TrackBack.
+Revision history for Perl extension Net::Trackback.
 (formerly XML::TrackBack)
+
+0.991  Mar 20 2004
+    - Snagged by the lowercase B. Fixed the test script that was failing because of the difference in case.
 
 0.99  Mar 20 2004
     - Complete refactoring of the interface and code. Too many changes to list.
+    - Change module name to reflect the official capitalization -- lowercase B.
 
 0.21  Mar 19 2003
 	- Moved module in heirarchy from XML::TrackBack to more appropriate Net::TrackBack.

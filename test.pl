@@ -7,7 +7,7 @@
 
 use Test;
 BEGIN { plan tests => 1 };
-use Net::TrackBack;
+use Net::Trackback;
 ok(1); # If we made it this far, we're ok.
 
 #########################
