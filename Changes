@@ -1,0 +1,13 @@
+CHANGE LOG
+Net::TrackBack 
+(formerly XML::TrackBack)
+
+0.21 2003.03.17
+	- Moved module in heirarchy from XML::TrackBack to more appropriate Net::TrackBack.
+	- Initial release into CPAN.
+
+0.2  2003.01.16
+    - Added discover subroutine.
+
+0.1  2003.01.11
+    - Initial distribution.

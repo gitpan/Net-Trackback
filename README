@@ -1,0 +1,9 @@
+Net::TrackBack is a modularized implementation of core TrackBack 1x functionality. TrackBack, a 
+framework for peer-to-peer communication and notifications between web sites that was developed
+by Ben and Mena Trott.
+
+This modules requires the LWP package.
+
+The software is released under the Artistic License. The terms of the Artistic License are described 
+at http://www.perl.com/language/misc/Artistic.html. Except where otherwise noted, Net::TrackBack is 
+Copyright 2003, Timothy Appnel, tima@mplode.com. All rights reserved.
