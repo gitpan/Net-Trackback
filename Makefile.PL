@@ -4,5 +4,5 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
     'NAME'		=> 'Net::Trackback',
     'VERSION_FROM'	=> 'lib/Net/Trackback.pm',
-    'PREREQ_PM'		=> { LWP, Class::ErrorHandler }
+    'PREREQ_PM'		=> { LWP=>5.8, Class::ErrorHandler=>0.01 }
 );

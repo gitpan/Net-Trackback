@@ -1,6 +1,10 @@
 Revision history for Perl extension Net::Trackback.
 (formerly XML::TrackBack and Net::TrackBack)
 
+1.01  Dec 24 2004
+    - Fixed cut-and-paste sloppiness in Ping where the package was defined
+      as Client
+    - Added versions numbers to prerequisites in Makefile.
 1.0   Dec 24 2004
     - BREAK: Net::Trackback::Ping::parse returns a Ping object or
       undefined. Previous 0.99 release would return 

@@ -1,7 +1,7 @@
 # Copyright (c) 2003-2004 Timothy Appnel (cpan@timaoutloud.org)
 # http://www.timaoutloud.org/
 # This code is released under the Artistic License.
-package Net::Trackback::Client;
+package Net::Trackback::Ping;
 use strict;
 use base qw( Class::ErrorHandler );
 
